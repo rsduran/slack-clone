@@ -1,4 +1,5 @@
-import Toolbar from './toolbar';
+import { Sidebar } from './sidebar';
+import { Toolbar } from './toolbar';
 
 interface WorkspaceLayoutProps {
   children: React.ReactNode;
@@ -8,7 +9,10 @@ const WorkspaceLayout = ({ children }: WorkspaceLayoutProps) => {
   return (
     <div className="h-full">
       <Toolbar />
-      {children}
+      <div className="flex h-[calc(100vh-40px)]">
+        <Sidebar />
+        {children}
+      </div>
     </div>
   );
 };
