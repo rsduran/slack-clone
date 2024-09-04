@@ -33,13 +33,9 @@ export const WorkspaceSwitcher = () => {
     (workspace) => workspace?._id !== workspaceId
   );
 
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
-
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <Button className="size-9 relative overflow-hidden bg-[#ababad] hover:bg-[#ababad]/80 text-slate-800 font-semibold text-xl">
           {workspacesLoading ? (
             <Loader className="size-5 animate-spin shrink-0" />
