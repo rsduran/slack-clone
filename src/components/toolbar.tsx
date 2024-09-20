@@ -2,7 +2,7 @@ import { MessageSquareTextIcon, Pencil, Smile, Trash } from 'lucide-react';
 
 import { Button } from './ui/button';
 import { Hint } from './hint';
-import { EmoijiPopover } from './emoji-popover';
+import { EmojiPopover } from './emoji-popover';
 
 interface ToolbarProps {
   isAuthor: boolean;
@@ -26,14 +26,14 @@ export const Toolbar = ({
   return (
     <div className="absolute top-0 right-5">
       <div className="group-hover:opacity-100 opacity-0 transition-opacity border bg-white rounded-md shadow-sm">
-        <EmoijiPopover
+        <EmojiPopover
           hint="Add reaction"
-          onEmojiSelect={(emoji) => handleReaction(emoji.native)}
+          onEmojiSelect={(emoji) => handleReaction(emoji)}
         >
           <Button variant="ghost" size="iconSm" disabled={isPending}>
             <Smile className="size-4" />
           </Button>
-        </EmoijiPopover>
+        </EmojiPopover>
         {!hideThreadButton && (
           <Hint label="Reply in thread">
             <Button

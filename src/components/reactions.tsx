@@ -5,7 +5,7 @@ import { Doc, Id } from '../../convex/_generated/dataModel';
 import { useCurrentMember } from '@/features/members/api/use-current-member';
 import { cn } from '@/lib/utils';
 import { Hint } from './hint';
-import { EmoijiPopover } from './emoji-popover';
+import { EmojiPopover } from './emoji-popover';
 
 interface ReactionsProps {
   data: Array<
@@ -52,14 +52,14 @@ export const Reactions = ({ data, onChange }: ReactionsProps) => {
           </button>
         </Hint>
       ))}
-      <EmoijiPopover
+      <EmojiPopover
         hint="Add Reaction"
-        onEmojiSelect={(emoji) => onChange(emoji.native)}
+        onEmojiSelect={(emoji) => onChange(emoji)}
       >
         <button className="h-6 px-3 rounded-full bg-slate-200/70 border border-transparent hover:border-slate-500 text-slate-800 flex items-center gap-x-1">
           <MdOutlineAddReaction className="size-4" />
         </button>
-      </EmoijiPopover>
+      </EmojiPopover>
     </div>
   );
 };

@@ -17,7 +17,7 @@ import 'quill/dist/quill.snow.css';
 import { Hint } from './hint';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
-import { EmoijiPopover } from './emoji-popover';
+import { EmojiPopover } from './emoji-popover';
 
 type EditorValue = {
   image: File | null;
@@ -149,10 +149,10 @@ export const Editor = ({
     }
   };
 
-  const onEmojiSelect = (emoji: any) => {
+  const onEmojiSelect = (emojivalue: string) => {
     const quill = quillRef.current;
 
-    quill?.insertText(quill?.getSelection()?.index || 0, emoji.native);
+    quill?.insertText(quill?.getSelection()?.index || 0, emojivalue);
   };
 
   const isEmpty = !image && text.replace(/<(.|\n)*?>/g, '').trim().length === 0;
@@ -210,7 +210,7 @@ export const Editor = ({
               <PiTextAa className="size-4" />
             </Button>
           </Hint>
-          <EmoijiPopover onEmojiSelect={onEmojiSelect}>
+          <EmojiPopover onEmojiSelect={onEmojiSelect}>
             <Button
               disabled={disabled}
               size="iconSm"
@@ -219,7 +219,7 @@ export const Editor = ({
             >
               <Smile className="size-4" />
             </Button>
-          </EmoijiPopover>
+          </EmojiPopover>
           {variant === 'create' && (
             <Hint label="Image">
               <Button
