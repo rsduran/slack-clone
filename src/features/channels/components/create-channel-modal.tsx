@@ -42,7 +42,7 @@ export const CreateChannelModal = () => {
       { name, workspaceId },
       {
         onSuccess: (id) => {
-          // TODO: Redirect to new channel
+          // Redirect to new channel
           toast.success('Channel created successfully');
           router.push(`/workspace/${workspaceId}/channel/${id}`);
           handleClose();
@@ -73,7 +73,7 @@ export const CreateChannelModal = () => {
             placeholder="e.g. plan-budget"
           />
           <div className="flex justify-end">
-            <Button disabled={false}>Create</Button>
+            <Button disabled={isPending}>Create</Button>
           </div>
         </form>
       </DialogContent>

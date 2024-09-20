@@ -84,7 +84,6 @@ export const Editor = ({
             enter: {
               key: 'Enter',
               handler: () => {
-                // TODO: Submit form
                 const text = quill.getText();
                 const addedImage = imageElementRef.current?.files?.[0] || null;
 

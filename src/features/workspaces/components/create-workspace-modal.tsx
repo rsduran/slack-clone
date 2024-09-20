@@ -24,7 +24,6 @@ export const CreateWorkspaceModal = () => {
   const handleClose = () => {
     setOpen(false);
     setName(''); // Reset input field
-    // TODO: Clear form
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

@@ -102,14 +102,14 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
             type="password"
             required
           />
-          <Button type="submit" className="w-full" size="lg" disabled={false}>
+          <Button type="submit" className="w-full" size="lg" disabled={pending}>
             Continue
           </Button>
         </form>
         <Separator />
         <div className="flex flex-col gap-y-2.5">
           <Button
-            disabled={false}
+            disabled={pending}
             onClick={() => onProviderSignUp('google')}
             variant="outline"
             size="lg"
@@ -119,7 +119,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
             Continue with Google
           </Button>
           <Button
-            disabled={false}
+            disabled={pending}
             onClick={() => onProviderSignUp('github')}
             variant="outline"
             size="lg"
