@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { TriangleAlert } from 'lucide-react';
-import { useAuthActions } from '@convex-dev/auth/react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -21,8 +20,6 @@ interface SignUpCardProps {
 }
 
 export const SignUpCard = ({ setState }: SignUpCardProps) => {
-  const { signIn } = useAuthActions();
-
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -30,7 +27,7 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
 
-  const onPasswordSignUp = (event: React.FormEvent<HTMLFormElement>) => {
+  const onPasswordSignUp = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (password !== confirmPassword) {
@@ -39,20 +36,39 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
     }
 
     setPending(true);
-    signIn('password', { name, email, password, flow: 'signUp' })
-      .catch(() => {
-        setError('Somethig went wrong');
-      })
-      .finally(() => {
-        setPending(false);
+
+    try {
+      const response = await fetch('http://localhost:8080/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
       });
+
+      if (!response.ok) {
+        throw new Error('Failed to sign up');
+      }
+
+      const data = await response.json();
+      console.log(data); // Handle success
+
+      // Optionally switch to the sign-in state
+      setState('SignIn');
+    } catch (error) {
+      setError('Something went wrong. Please try again.');
+    } finally {
+      setPending(false);
+    }
   };
 
-  const onProviderSignUp = (value: 'github' | 'google') => {
-    setPending(true);
-    signIn(value).finally(() => {
-      setPending(false);
-    });
+  const onProviderSignUp = (provider: 'github' | 'google') => {
+    // Handle OAuth provider sign-up with custom backend logic
+    // You might want to call your Go backend here for GitHub/Google OAuth sign-up
   };
 
   return (

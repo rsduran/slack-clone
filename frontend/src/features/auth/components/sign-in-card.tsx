@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
-import { useAuthActions } from '@convex-dev/auth/react';
+import axios from 'axios';
 import { TriangleAlert } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -21,32 +21,37 @@ interface SignInCardProps {
 }
 
 export const SignInCard = ({ setState }: SignInCardProps) => {
-  const { signIn } = useAuthActions();
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [pending, setPending] = useState(false);
 
-  const onPasswordSignIn = (event: React.FormEvent<HTMLFormElement>) => {
+  const onPasswordSignIn = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     setPending(true);
-    const formData = new FormData(event.currentTarget);
-    signIn('password', { email, password, flow: 'signIn' })
-      .catch(() => {
-        setError('Invalid email or password');
-      })
-      .finally(() => {
-        setPending(false);
+    try {
+      const response = await axios.post('http://localhost:8080/login', {
+        email,
+        password,
       });
+
+      // Save JWT token to localStorage or cookies
+      localStorage.setItem('token', response.data.token);
+      console.log('Login successful');
+      setError(''); // Clear any previous errors
+    } catch (error) {
+      setError('Invalid email or password');
+      console.error('Error logging in:', error);
+    } finally {
+      setPending(false);
+    }
   };
 
-  const onProviderSignIn = (value: 'github' | 'google') => {
+  const onProviderSignIn = (provider: 'github' | 'google') => {
+    // You can handle OAuth sign-in with the provider by redirecting to the respective OAuth URL or API call.
     setPending(true);
-    signIn(value).finally(() => {
-      setPending(false);
-    });
+    console.log(`Redirecting to ${provider} OAuth login...`);
+    setPending(false);
   };
 
   return (
